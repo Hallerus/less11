@@ -7,27 +7,27 @@ pipeline {
 
     stages {
         stage ('Copy source with GIT') {
-            step {
+            steps {
                 sh 'git clone https://github.com/Hallerus/boxfuse-origin.git /tmp/boxfuse'
             }
 
         }
 
         stage ('Build and deploy artifact to Nexus') {
-            step {
+            steps {
                 sh 'mvn --file /tmp/boxfuse clean deploy'
             }
         }
 
         stage ('Make Docker image') {
-            step {
+            steps {
                 sh 'docker build --tag=prod /tmp'
                 sh 'docker tag prod 34.77.252.64:8123/prod:1 && docker login 34.77.252.64:8123 -u doc -p 123 && docker push 34.77.252.64:8123/prod:1'
             }
         }
 
         stage ('Run Docker on PROD') {
-            step {
+            steps {
                 sh '''ssh 35.228.253.106 << EOF
                 docker login 34.77.252.64:8123 -u doc -p 123 &&
                 docker pull 34.77.252.64:8123/prod:1 &&
