@@ -26,7 +26,7 @@ pipeline {
             }
         }
 
-        stage ('pull docker image') {
+        stage ('Run Docker on PROD') {
             step {
                 sh 'ssh 35.228.253.106 <<EOF
                 docker login 34.77.252.64:8123 -u doc -p 123 &&
