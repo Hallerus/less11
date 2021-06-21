@@ -28,12 +28,12 @@ pipeline {
 
         stage ('Run Docker on PROD') {
             step {
-                sh 'ssh 35.228.253.106 <<EOF
+                sh '''ssh 35.228.253.106 << EOF
                 docker login 34.77.252.64:8123 -u doc -p 123 &&
                 docker pull 34.77.252.64:8123/prod:1 &&
                 docker stop $( docker ps -q) &&
                 docker run -d -p 8080:8080 34.77.252.64:8123/prod:1
-                EOF'
+                EOF'''
             }
         }
     }
