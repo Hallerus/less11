@@ -1,10 +1,13 @@
 pipeline {
     agent {
         docker {
-      //      label 'Dev'
+            image '35.228.116.96:8123/repository/mydockerrepo/dev:0.1.0'
+            /*
+            label 'Dev'
             image 'dev:0.1.0'
             registryUrl 'http://35.228.116.96:8123/repository/mydockerrepo/'
-            registryCredentialsId '6ac9b23e-2a6a-45b2-80bf-0a1374f32ed1'
+            registryCredentialsId '6ac9b23e-2a6a-45b2-80bf-0a1374f32ed1' 
+            */
         }
     }
     
