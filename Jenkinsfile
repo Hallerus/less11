@@ -2,11 +2,6 @@ pipeline {
     agent {
         docker {
            image '35.228.116.96:8123/dev:0.2.0'
-           /*
-            image 'dev:0.2.0'
-            registryUrl 'http://35.228.116.96:8123/repository/mydockerrepo/'
-            registryCredentialsId '6ac9b23e-2a6a-45b2-80bf-0a1374f32ed1' 
-            */
         }
     }
     
@@ -20,7 +15,7 @@ pipeline {
 
         stage ('Build and deploy artifact to Nexus') {
             steps {
-                sh 'cd /tmp; ls -al'
+                sh 'cd /tmp && ls -al'
                 sh 'mvn --file /tmp/boxfuse/pom.xml clean deploy'
             }
         }
