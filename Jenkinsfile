@@ -24,8 +24,8 @@ pipeline {
             steps {
                 sh 'cp -f /tmp/boxfuse/target/hello-1.0.war /tmp'
                 sh 'docker build --tag=prod /tmp'
-                sh 'docker tag prod 35.228.116.96:8123/prod:1 && docker push 35.228.116.96:8123/prod:1'
-            } //docker login 35.228.116.96:8123 -u doc -p 123 && 
+                sh 'docker login 35.228.116.96:8123 -u doc -p 123 && docker tag prod 35.228.116.96:8123/prod:1 && docker push 35.228.116.96:8123/prod:1'
+            }
         }
 
         stage ('Run Docker on PROD') {
