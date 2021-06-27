@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-           image '35.228.116.96:8123/dev:0.4.4'
+           image '35.228.116.96:8123/dev:0.5.0'
            args '-v /var/run/docker.sock:/var/run/docker.sock -u root:root'
         }
     }
