@@ -9,8 +9,6 @@ pipeline {
     stages {
         stage ('Copy source with GIT') {
             steps {
-                sh 'rm -rf /tmp/boxfuse'
-                sh 'cd /tmp && ls -al'
                 sh 'git clone https://github.com/Hallerus/boxfuse-origin.git /tmp/boxfuse'
             }
         }
@@ -26,8 +24,8 @@ pipeline {
             steps {
                 sh 'cp -f /tmp/boxfuse/target/hello-1.0.war /tmp'
                 sh 'docker build --tag=prod /tmp'
-                sh 'docker login 35.228.116.96:8123 -u doc -p 123 && docker tag prod 35.228.116.96:8123/prod:1 && docker push 35.228.116.96:8123/prod:1'
-            }
+                sh 'docker tag prod 35.228.116.96:8123/prod:1 && docker push 35.228.116.96:8123/prod:1'
+            } //docker login 35.228.116.96:8123 -u doc -p 123 && 
         }
 
         stage ('Run Docker on PROD') {
