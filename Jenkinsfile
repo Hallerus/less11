@@ -1,13 +1,15 @@
 pipeline {
     agent {
         docker {
-           image '35.228.116.96:8123/dev:0.2.0'
+           image '35.228.116.96:8123/dev:0.3.0'
+           args '-v /var/run/docker-sock:/var/run/docker-sock -u root:root'
         }
     }
     
     stages {
         stage ('Copy source with GIT') {
             steps {
+                sh 'rm -rf /tmp/boxfuse'
                 sh 'git clone https://github.com/Hallerus/boxfuse-origin.git /tmp/boxfuse'
             }
 
@@ -16,6 +18,7 @@ pipeline {
         stage ('Build and deploy artifact to Nexus') {
             steps {
                 sh 'cd /tmp && ls -al'
+                sh 'mvn --file /tmp/boxfuse/pom.xml package'
                 sh 'mvn --file /tmp/boxfuse/pom.xml clean deploy'
             }
         }
@@ -23,7 +26,7 @@ pipeline {
         stage ('Make Docker image') {
             steps {
                 sh 'docker build --tag=prod /tmp'
-                sh 'docker tag prod 35.228.116.96:8123/prod:1 && docker login 35.228.116.96:8123 -u admin -p 123 && docker push 35.228.116.96:8123/prod:1'
+                sh 'docker tag prod 35.228.116.96:8123/prod:1 && docker push 35.228.116.96:8123/prod:1'
             }
         }
         /*
