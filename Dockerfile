@@ -1,5 +1,7 @@
-FROM openjdk:11.0.11-slim-buster
-RUN apt update && \
-    apt install -y docker.io git maven
+FROM ubuntu:18.04
+ENV TZ=Europe/Moscow
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get update && \
+    apt-get install maven git docker.io -y
 COPY ./prod/Dockerfile /tmp
-COPY ./prod/settings.xml /etc/maven/settings.xml
+COPY ./prod/settings.xml /tmp
