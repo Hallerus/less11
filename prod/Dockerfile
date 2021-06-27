@@ -6,5 +6,5 @@ RUN wget -nv https://mirror.linux-ia64.org/apache/tomcat/tomcat-9/v9.0.48/bin/ap
         tar xvzf apache-tomcat-9.0.48.tar.gz --strip-components 1 --directory . && \
         rm -rf apache-tomcat-9.0.48.tar.gz && \
         rm -rf /opt/tomcat/webapps/*
-COPY /tmp/boxfuse/target/hello-1.0.war /opt/tomcat/webapps/
+COPY hello-1.0.war /opt/tomcat/webapps/
 CMD ["/opt/tomcat/bin/catalina.sh", "run"]

@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-           image '35.228.116.96:8123/dev:0.5.0'
+           image '35.228.116.96:8123/dev:0.5.2'
            args '-v /var/run/docker.sock:/var/run/docker.sock -u root:root'
         }
     }
@@ -24,6 +24,7 @@ pipeline {
 
         stage ('Make Docker image') {
             steps {
+                sh 'cp -f /tmp/boxfuse/target/hello-1.0.war /tmp'
                 sh 'docker build --tag=prod /tmp'
                 sh 'docker login 35.228.116.96:8123 -u doc -p 123 && docker tag prod 35.228.116.96:8123/prod:1 && docker push 35.228.116.96:8123/prod:1'
             }
